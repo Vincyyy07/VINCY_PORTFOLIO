@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Raj Vincy Degapati | Front-End Developer</title>
+  <meta name="description"
+    content="Portfolio of Raj Vincy Degapati – Front-End Developer, CSE student passionate about building premium web experiences." />
+
+  <!-- Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- AOS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <!-- Typed.js -->
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- ===== SCROLL-TELLING INTRO ===== -->
+  <div id="introOverlay" class="intro-overlay">
+    <div class="intro-content">
+      <div class="intro-text" id="introText1">Hello.</div>
+      <div class="intro-text" id="introText2">Welcome to my space.</div>
+      <div class="intro-text" id="introText3">I'm Vincyyy.</div>
+      <div class="intro-text" id="introText4">Let's build something amazing.</div>
+    </div>
+    <div class="intro-progress">
+      <div class="intro-progress-bar" id="introProgressBar"></div>
+    </div>
+  </div> <!-- ===== CURSOR GLOW ===== -->
+  <div class="cursor-glow" id="cursorGlow"></div>
+
+  <!-- ===== PARTICLES ===== -->
+  <div class="particles" id="particles"></div>
+
+  <!-- ===== SIDE NAV ===== -->
+  <nav id="sidenav">
+    <a href="#home" data-label="Home" id="nav-home"><span></span></a>
+    <a href="#about" data-label="About" id="nav-about"><span></span></a>
+    <a href="#skills" data-label="Skills" id="nav-skills"><span></span></a>
+    <a href="#projects" data-label="Projects" id="nav-projects"><span></span></a>
+    <a href="#internships" data-label="Internships" id="nav-internships"><span></span></a>
+    <a href="#achievements" data-label="Achievements" id="nav-achievements"><span></span></a>
+    <a href="#contact" data-label="Contact" id="nav-contact"><span></span></a>
+  </nav>
+
+  <!-- ===== TOP BAR ===== -->
+  <div class="topbar">
+    <div class="topbar-logo">RV<span>.</span></div>
+    <button class="theme-toggle" onclick="toggleMode()" title="Toggle Theme" id="themeToggle">
+      <i class="fas fa-moon"></i>
+    </button>
+  </div>
+
+  <!-- ===== HOME ===== -->
+  <section id="home" class="home-section">
+    <div class="home-bg-orb orb1"></div>
+    <div class="home-bg-orb orb2"></div>
+    <div class="home-content" data-aos="fade-right" data-aos-duration="900">
+      <h1 class="home-title">Hey, I'm <span class="gradient-text">Raj Vincy</span></h1>
+      <div class="typed-line"><span id="typed"></span></div>
+      <p class="home-sub">A passionate Front-End Developer building clean, responsive, and visually stunning web
+        experiences from Andhra Pradesh, India.</p>
+      <div class="home-cta">
+        <a href="#projects" class="btn btn-primary"><i class="fas fa-rocket"></i> View Projects</a>
+        <a href="assets/resume.pdf" target="_blank" class="btn btn-ghost"><i class="fas fa-file-alt"></i> Resume</a>
+      </div>
+      <div class="social-row">
+        <a href="https://linkedin.com/in/raj-vincy-degapati" target="_blank" class="social-chip"><i
+            class="fab fa-linkedin"></i> LinkedIn</a>
+        <a href="https://github.com/Vincyyy07" target="_blank" class="social-chip"><i class="fab fa-github"></i>
+          GitHub</a>
+        <a href="mailto:degapatirajvincy@gmail.com" class="social-chip"><i class="fas fa-envelope"></i> Email</a>
+      </div>
+    </div>
+    <div class="home-avatar" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="200">
+      <div class="photo-card">
+        <img src="assets/photo.jpeg" alt="Raj Vincy Degapati" />
+        <div class="photo-overlay">
+          <span class="photo-role"><i class="fas fa-code"></i> Front-End Developer</span>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-hint">
+      <div class="scroll-dot"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT ===== -->
+  <section id="about" class="section">
+    <div class="section-label" data-aos="fade-right">01 — About</div>
+    <h2 class="section-title" data-aos="fade-up">About <span class="gradient-text">Me</span></h2>
+
+    <div class="about-grid">
+      <div class="about-text-col" data-aos="fade-right" data-aos-delay="100">
+        <p class="about-para">
+          Hello! I'm <strong>Raj Vincy Degapati</strong>, a highly enthusiastic and self-motivated <strong>Computer
+            Science student</strong> at Aditya Engineering College (A), Surampalem. I have a strong passion for
+          continuous learning and exploring new technologies.
+        </p>
+        <p class="about-para">
+          Driven by curiosity and a hands-on approach, I independently acquired knowledge across various domains. I love
+          combining <span class="hl">design thinking</span> with <span class="hl">technical logic</span> — transforming
+          concepts into responsive, polished web experiences. Always aiming for <strong>clarity over clutter</strong>.
+        </p>
+        <div class="edu-card" data-aos="fade-up" data-aos-delay="200">
+          <div class="edu-icon"><i class="fas fa-graduation-cap"></i></div>
+          <div>
+            <div class="edu-degree">B.Tech – Computer Science & Engineering</div>
+            <div class="edu-school">Aditya Engineering College (A), Surampalem</div>
+            <div class="edu-meta">
+              <span><i class="fas fa-calendar"></i> 2023 – Present</span>
+              <span class="edu-cgpa"><i class="fas fa-star"></i> CGPA: 8.45</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-info-col" data-aos="fade-left" data-aos-delay="150">
+        <div class="info-card">
+          <i class="fas fa-envelope"></i>
+          <div>
+            <span class="info-label">Email</span>
+            <a href="mailto:degapatirajvincy@gmail.com" class="info-val">degapatirajvincy@gmail.com</a>
+          </div>
+        </div>
+        <div class="info-card">
+          <i class="fas fa-phone"></i>
+          <div>
+            <span class="info-label">Phone</span>
+            <span class="info-val">+91 6305575411</span>
+          </div>
+        </div>
+        <div class="info-card">
+          <i class="fas fa-map-marker-alt"></i>
+          <div>
+            <span class="info-label">Location</span>
+            <span class="info-val">Andhra Pradesh, India</span>
+          </div>
+        </div>
+        <div class="soft-skills-wrap">
+          <div class="soft-label">Soft Skills</div>
+          <div class="tag-row">
+            <span class="tag">Adaptability</span>
+            <span class="tag">Quick Learning</span>
+            <span class="tag">Time Management</span>
+            <span class="tag">Teamwork</span>
+            <span class="tag">Creativity</span>
+            <span class="tag">Communication</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SKILLS ===== -->
+  <section id="skills" class="section">
+    <div class="section-label" data-aos="fade-right">02 — Skills</div>
+    <h2 class="section-title" data-aos="fade-up">Technical <span class="gradient-text">Skills</span></h2>
+
+    <div class="skills-grid">
+
+      <div class="skill-category" data-aos="fade-up" data-aos-delay="50">
+        <div class="skill-cat-header"><i class="fas fa-code"></i> Languages</div>
+        <div class="skill-items">
+          <div class="skill-pill"><i class="fas fa-copyright"></i> C</div>
+          <div class="skill-pill"><i class="fas fa-plus"></i> C++</div>
+          <div class="skill-pill"><i class="fab fa-python"></i> Python</div>
+        </div>
+      </div>
+
+      <div class="skill-category" data-aos="fade-up" data-aos-delay="100">
+        <div class="skill-cat-header"><i class="fas fa-globe"></i> Web Development</div>
+        <div class="skill-items">
+          <div class="skill-pill"><i class="fab fa-html5"></i> HTML5</div>
+          <div class="skill-pill"><i class="fab fa-css3-alt"></i> CSS3</div>
+          <div class="skill-pill"><i class="fab fa-js"></i> JavaScript</div>
+          <div class="skill-pill"><i class="fab fa-react"></i> React</div>
+        </div>
+      </div>
+
+      <div class="skill-category" data-aos="fade-up" data-aos-delay="150">
+        <div class="skill-cat-header"><i class="fas fa-database"></i> Databases</div>
+        <div class="skill-items">
+          <div class="skill-pill"><i class="fas fa-leaf"></i> MongoDB</div>
+          <div class="skill-pill"><i class="fas fa-table"></i> MySQL</div>
+          <div class="skill-pill"><i class="fas fa-db"></i> SQLite</div>
+        </div>
+      </div>
+
+      <div class="skill-category" data-aos="fade-up" data-aos-delay="200">
+        <div class="skill-cat-header"><i class="fas fa-brain"></i> Core CS</div>
+        <div class="skill-items">
+          <div class="skill-pill"><i class="fas fa-puzzle-piece"></i> Problem Solving</div>
+          <div class="skill-pill"><i class="fas fa-sitemap"></i> DSA</div>
+          <div class="skill-pill"><i class="fas fa-cubes"></i> OOP</div>
+        </div>
+      </div>
+
+      <div class="skill-category" data-aos="fade-up" data-aos-delay="250">
+        <div class="skill-cat-header"><i class="fas fa-tools"></i> Developer Tools</div>
+        <div class="skill-items">
+          <div class="skill-pill"><i class="fab fa-git-alt"></i> Git</div>
+          <div class="skill-pill"><i class="fab fa-github"></i> GitHub</div>
+          <div class="skill-pill"><i class="fas fa-bolt"></i> Vite</div>
+          <div class="skill-pill"><i class="fab fa-bootstrap"></i> Bootstrap</div>
+        </div>
+      </div>
+
+      <div class="skill-category" data-aos="fade-up" data-aos-delay="300">
+        <div class="skill-cat-header"><i class="fas fa-layer-group"></i> Proficiencies</div>
+        <div class="skill-items">
+          <div class="skill-pill"><i class="fas fa-mobile-alt"></i> Responsive Design</div>
+          <div class="skill-pill"><i class="fas fa-paint-brush"></i> UI/UX</div>
+          <div class="skill-pill"><i class="fab fa-css3"></i> Tailwind CSS</div>
+          <div class="skill-pill"><i class="fab fa-python"></i> TypeScript</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== PROJECTS ===== -->
+  <section id="projects" class="section">
+    <div class="section-label" data-aos="fade-right">03 — Projects</div>
+    <h2 class="section-title" data-aos="fade-up">Featured <span class="gradient-text">Projects</span></h2>
+
+    <div class="projects-grid">
+
+      <div class="project-card" data-aos="fade-up" data-aos-delay="50">
+        <div class="project-glow"></div>
+        <div class="project-top">
+          <div class="project-icon"><i class="fas fa-user-circle"></i></div>
+          <div class="project-links">
+            <a href="#" class="proj-link" title="GitHub"><i class="fab fa-github"></i></a>
+            <a href="#" class="proj-link" title="Live Demo"><i class="fas fa-external-link-alt"></i></a>
+          </div>
+        </div>
+        <h3 class="project-title">Portfolio Website</h3>
+        <p class="project-desc">A fully responsive personal portfolio website showcasing projects, skills, and contact
+          information with modern UI/UX principles.</p>
+        <ul class="project-highlights">
+          <li>Smooth scrolling & entrance animations</li>
+          <li>Dark/light theme toggle</li>
+          <li>Mobile-first responsive design</li>
+        </ul>
+        <div class="project-tags">
+          <span>HTML</span><span>CSS</span><span>JavaScript</span><span>Bootstrap</span>
+        </div>
+        <div class="project-role"><i class="fas fa-user-tie"></i> Role: Front-End Developer</div>
+      </div>
+
+      <div class="project-card featured" data-aos="fade-up" data-aos-delay="150">
+        <div class="project-glow"></div>
+        <div class="project-top">
+          <div class="project-icon"><i class="fas fa-shield-alt"></i></div>
+          <div class="project-links">
+            <a href="https://github.com/Vincyyy07/secure-password" target="_blank" class="proj-link" title="GitHub"><i
+                class="fab fa-github"></i></a>
+            <a href="https://secure-password-lac.vercel.app" target="_blank" class="proj-link" title="Live Demo"><i
+                class="fas fa-external-link-alt"></i></a>
+          </div>
+        </div>
+        <h3 class="project-title">Secure Password Checker</h3>
+        <p class="project-desc">A secure password strength checker that validates passwords based on length, character
+          variety, and complexity rules with real-time feedback.</p>
+        <ul class="project-highlights">
+          <li>Real-time strength indication</li>
+          <li>Secure password suggestions</li>
+          <li>Promotes better cybersecurity practices</li>
+        </ul>
+        <div class="project-tags">
+          <span>React</span><span>TypeScript</span><span>Vite</span><span>Tailwind CSS</span>
+        </div>
+        <div class="project-role"><i class="fas fa-user-tie"></i> Role: Developer</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== INTERNSHIPS ===== -->
+  <section id="internships" class="section">
+    <div class="section-label" data-aos="fade-right">04 — Internships</div>
+    <h2 class="section-title" data-aos="fade-up">My <span class="gradient-text">Internships</span></h2>
+
+    <div class="timeline" data-aos="fade-up" data-aos-delay="100">
+      <div class="timeline-line"></div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="tl-header">
+            <div>
+              <div class="tl-title">Front-End Developer – Trainee</div>
+              <div class="tl-company"><i class="fas fa-building"></i> 1Stop.ai</div>
+            </div>
+            <div class="tl-date"><i class="fas fa-calendar-alt"></i> May 2025 – June 2025</div>
+          </div>
+          <ul class="tl-bullets">
+            <li>Trained with Front-End Tools: HTML, CSS, JavaScript and earned certification.</li>
+            <li>Completed Front-End Mini Projects including a Personal Portfolio Website.</li>
+            <li>Gained hands-on experience in building responsive, user-friendly interfaces.</li>
+          </ul>
+          <div class="tl-tags">
+            <span>HTML</span><span>CSS</span><span>JavaScript</span><span>Certified</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== ACHIEVEMENTS ===== -->
+  <section id="achievements" class="section">
+    <div class="section-label" data-aos="fade-right">05 — Achievements</div>
+    <h2 class="section-title" data-aos="fade-up">Coding <span class="gradient-text">Profiles & Certs</span></h2>
+
+    <div class="ach-grid">
+
+      <div class="ach-col" data-aos="fade-right" data-aos-delay="50">
+        <div class="ach-heading"><i class="fas fa-trophy"></i> Coding Profiles</div>
+        <div class="ach-cards">
+
+          <div class="ach-card">
+            <div class="ach-platform codechef">
+              <i class="fas fa-utensils"></i> CodeChef
+            </div>
+            <div class="ach-detail">1-Star Coder <span class="ach-meta">Max Rating: 1179</span></div>
+          </div>
+
+          <div class="ach-card">
+            <div class="ach-platform leetcode">
+              <i class="fas fa-code"></i> LeetCode
+            </div>
+            <div class="ach-detail">150+ Problems Solved <span class="ach-meta">Active</span></div>
+          </div>
+
+          <div class="ach-card">
+            <div class="ach-platform gfg">
+              <i class="fas fa-leaf"></i> GeeksforGeeks
+            </div>
+            <div class="ach-detail">Actively Problem Solving <span class="ach-meta">Regular</span></div>
+          </div>
+
+          <div class="ach-card">
+            <div class="ach-platform hackerrank">
+              <i class="fas fa-star"></i> HackerRank
+            </div>
+            <div class="ach-detail">
+              5⭐ Problem Solving · 5⭐ C · 4⭐ C++
+              <span class="ach-meta">Multi-domain</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="ach-col" data-aos="fade-left" data-aos-delay="100">
+        <div class="ach-heading"><i class="fas fa-certificate"></i> Certifications</div>
+        <div class="ach-cards">
+
+          <div class="cert-card">
+            <div class="cert-icon"><i class="fas fa-flask"></i></div>
+            <div class="cert-text">
+              <div class="cert-name">Practical Machine Learning Workshop</div>
+              <div class="cert-org">JNTU Vizianagaram</div>
+            </div>
+          </div>
+
+          <div class="cert-card">
+            <div class="cert-icon"><i class="fas fa-check-circle"></i></div>
+            <div class="cert-text">
+              <div class="cert-name">Problem Solving — Basic & Intermediate</div>
+              <div class="cert-org">HackerRank</div>
+            </div>
+          </div>
+
+          <div class="cert-card">
+            <div class="cert-icon"><i class="fas fa-database"></i></div>
+            <div class="cert-text">
+              <div class="cert-name">SQL — Basic</div>
+              <div class="cert-org">HackerRank</div>
+            </div>
+          </div>
+
+          <div class="cert-card">
+            <div class="cert-icon"><i class="fas fa-briefcase"></i></div>
+            <div class="cert-text">
+              <div class="cert-name">Software Engineer Intern</div>
+              <div class="cert-org">HackerRank</div>
+            </div>
+          </div>
+
+          <div class="cert-card">
+            <div class="cert-icon"><i class="fab fa-react"></i></div>
+            <div class="cert-text">
+              <div class="cert-name">React Essential Training</div>
+              <div class="cert-org">LinkedIn Learning</div>
+            </div>
+          </div>
+
+          <div class="cert-card">
+            <div class="cert-icon"><i class="fas fa-project-diagram"></i></div>
+            <div class="cert-text">
+              <div class="cert-name">Object Oriented Design</div>
+              <div class="cert-org">LinkedIn Learning</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section id="contact" class="section">
+    <div class="section-label" data-aos="fade-right">06 — Contact</div>
+    <h2 class="section-title" data-aos="fade-up">Get In <span class="gradient-text">Touch</span></h2>
+
+    <div class="contact-wrap" data-aos="fade-up" data-aos-delay="100">
+      <div class="contact-left">
+        <p class="contact-blurb">I'm currently open to internship and freelance opportunities. Whether you have a
+          project in mind or just want to say hi — my inbox is always open!</p>
+        <div class="contact-links">
+          <a href="mailto:degapatirajvincy@gmail.com" class="contact-link">
+            <i class="fas fa-envelope"></i>
+            <div>
+              <span class="cl-label">Email</span>
+              <span class="cl-val">degapatirajvincy@gmail.com</span>
+            </div>
+          </a>
+          <a href="tel:+916305575411" class="contact-link">
+            <i class="fas fa-phone"></i>
+            <div>
+              <span class="cl-label">Phone</span>
+              <span class="cl-val">+91 6305575411</span>
+            </div>
+          </a>
+          <a href="https://linkedin.com/in/raj-vincy-degapati" target="_blank" class="contact-link">
+            <i class="fab fa-linkedin"></i>
+            <div>
+              <span class="cl-label">LinkedIn</span>
+              <span class="cl-val">raj-vincy-degapati</span>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <form class="contact-form" id="contactForm" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" id="cName" placeholder="Your name" required />
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="cEmail" placeholder="your@email.com" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Subject</label>
+          <input type="text" id="cSubject" placeholder="What's this about?" required />
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea id="cMessage" rows="5" placeholder="Write your message here..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">
+          <i class="fas fa-paper-plane"></i> Send Message
+        </button>
+        <div class="form-feedback" id="formFeedback"></div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">RV<span>.</span></div>
+      <p class="footer-copy">© 2026 Raj Vincy Degapati. Crafted with <span class="heart">♥</span> and a lot of Vibe.</p>
+      <div class="footer-socials">
+        <a href="https://github.com/Vincyyy07" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="https://linkedin.com/in/raj-vincy-degapati" target="_blank"><i class="fab fa-linkedin"></i></a>
+        <a href="mailto:degapatirajvincy@gmail.com"><i class="fas fa-envelope"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top -->
+  <button class="back-top" id="backTop" onclick="scrollToTop()" title="Back to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <!-- AOS -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <!-- Script -->
+  <script src="script.js"></script>
+</body>
+
+</html>
