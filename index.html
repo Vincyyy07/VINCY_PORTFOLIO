@@ -28,18 +28,27 @@
 
 <body>
 
-  <!-- ===== SCROLL-TELLING INTRO ===== -->
+  <!-- ===== THEME-SYNCED INTRO ===== -->
   <div id="introOverlay" class="intro-overlay">
-    <div class="intro-content">
-      <div class="intro-text" id="introText1">Hello.</div>
-      <div class="intro-text" id="introText2">Welcome to my space.</div>
-      <div class="intro-text" id="introText3">I'm Vincyyy.</div>
-      <div class="intro-text" id="introText4">Let's build something amazing.</div>
+    <div class="intro-ambient">
+      <div class="intro-noise"></div>
+      <div class="intro-orb orb-a"></div>
+      <div class="intro-orb orb-b"></div>
+      <div class="intro-orb orb-c"></div>
     </div>
-    <div class="intro-progress">
-      <div class="intro-progress-bar" id="introProgressBar"></div>
+    <div class="intro-content sync-mode">
+      <div class="intro-brand">
+        <span class="brand-text" id="syncText1">Vincyyy<span class="brand-dot">.</span></span>
+      </div>
+      <div class="intro-tagline" id="syncText2">Dive in. Explore the vibe.</div>
+      <div class="intro-action">
+        <div class="action-text" id="actionText">Lessssgooooo</div>
+        <div class="action-line" id="actionLine"></div>
+      </div>
     </div>
-  </div> <!-- ===== CURSOR GLOW ===== -->
+  </div>
+
+  <!-- ===== CURSOR GLOW ===== -->
   <div class="cursor-glow" id="cursorGlow"></div>
 
   <!-- ===== PARTICLES ===== -->
@@ -71,8 +80,8 @@
     <div class="home-content" data-aos="fade-right" data-aos-duration="900">
       <h1 class="home-title">Hey, I'm <span class="gradient-text">Raj Vincy</span></h1>
       <div class="typed-line"><span id="typed"></span></div>
-      <p class="home-sub">A passionate Front-End Developer building clean, responsive, and visually stunning web
-        experiences from Andhra Pradesh, India.</p>
+      <p class="home-sub">A Computer Science student passionate about building clean, responsive, and visually stunning
+        web experiences, while constantly exploring opportunities to learn, build, and grow as a developer.</p>
       <div class="home-cta">
         <a href="#projects" class="btn btn-primary"><i class="fas fa-rocket"></i> View Projects</a>
         <a href="assets/resume.pdf" target="_blank" class="btn btn-ghost"><i class="fas fa-file-alt"></i> Resume</a>
@@ -243,29 +252,6 @@
       <div class="project-card" data-aos="fade-up" data-aos-delay="50">
         <div class="project-glow"></div>
         <div class="project-top">
-          <div class="project-icon"><i class="fas fa-user-circle"></i></div>
-          <div class="project-links">
-            <a href="#" class="proj-link" title="GitHub"><i class="fab fa-github"></i></a>
-            <a href="#" class="proj-link" title="Live Demo"><i class="fas fa-external-link-alt"></i></a>
-          </div>
-        </div>
-        <h3 class="project-title">Portfolio Website</h3>
-        <p class="project-desc">A fully responsive personal portfolio website showcasing projects, skills, and contact
-          information with modern UI/UX principles.</p>
-        <ul class="project-highlights">
-          <li>Smooth scrolling & entrance animations</li>
-          <li>Dark/light theme toggle</li>
-          <li>Mobile-first responsive design</li>
-        </ul>
-        <div class="project-tags">
-          <span>HTML</span><span>CSS</span><span>JavaScript</span><span>Bootstrap</span>
-        </div>
-        <div class="project-role"><i class="fas fa-user-tie"></i> Role: Front-End Developer</div>
-      </div>
-
-      <div class="project-card featured" data-aos="fade-up" data-aos-delay="150">
-        <div class="project-glow"></div>
-        <div class="project-top">
           <div class="project-icon"><i class="fas fa-shield-alt"></i></div>
           <div class="project-links">
             <a href="https://github.com/Vincyyy07/secure-password" target="_blank" class="proj-link" title="GitHub"><i
@@ -274,18 +260,42 @@
                 class="fas fa-external-link-alt"></i></a>
           </div>
         </div>
-        <h3 class="project-title">Secure Password Checker</h3>
-        <p class="project-desc">A secure password strength checker that validates passwords based on length, character
-          variety, and complexity rules with real-time feedback.</p>
+        <h3 class="project-title">Secure Password</h3>
+        <p class="project-desc">A secure password strength checker using React and TypeScript that validates passwords
+          based on length, character variety, and complexity rules.</p>
         <ul class="project-highlights">
-          <li>Real-time strength indication</li>
-          <li>Secure password suggestions</li>
-          <li>Promotes better cybersecurity practices</li>
+          <li>Integrated real-time strength indication</li>
+          <li>Secure password suggestions to promote better cybersecurity practices</li>
         </ul>
         <div class="project-tags">
-          <span>React</span><span>TypeScript</span><span>Vite</span><span>Tailwind CSS</span>
+          <span>HTML</span><span>React</span><span>TypeScript</span><span>Vite</span><span>Tailwind CSS</span>
         </div>
         <div class="project-role"><i class="fas fa-user-tie"></i> Role: Developer</div>
+      </div>
+
+      <div class="project-card featured" data-aos="fade-up" data-aos-delay="150">
+        <div class="project-glow"></div>
+        <div class="project-top">
+          <div class="project-icon"><i class="fas fa-robot"></i></div>
+          <div class="project-links">
+            <a href="https://github.com/Vincyyy07/MocMate-AI" target="_blank" class="proj-link" title="GitHub"><i
+                class="fab fa-github"></i></a>
+            <a href="https://team-code-zenith-main.onrender.com/" target="_blank" class="proj-link" title="Live Demo"><i
+                class="fas fa-external-link-alt"></i></a>
+          </div>
+        </div>
+        <h3 class="project-title">MocMate AI</h3>
+        <p class="project-desc">An AI-powered interview practice platform enabling users to simulate real interview
+          scenarios with AI-generated questions and structured feedback.</p>
+        <ul class="project-highlights">
+          <li>Responsive UI components for interview categories</li>
+          <li>Performance analytics dashboards</li>
+          <li>Practice simulations using React, TypeScript, and Tailwind CSS</li>
+        </ul>
+        <div class="project-tags">
+          <span>HTML</span><span>React</span><span>TypeScript</span><span>Vite</span><span>Tailwind CSS</span>
+        </div>
+        <div class="project-role"><i class="fas fa-user-tie"></i> Role: Front-End Developer</div>
       </div>
 
     </div>
@@ -373,26 +383,34 @@
         <div class="ach-cards">
 
           <div class="cert-card">
-            <div class="cert-icon"><i class="fas fa-flask"></i></div>
+            <div class="cert-icon"><i class="fas fa-laptop-code"></i></div>
             <div class="cert-text">
-              <div class="cert-name">Practical Machine Learning Workshop</div>
-              <div class="cert-org">JNTU Vizianagaram</div>
+              <div class="cert-name">Web Development Fundamentals</div>
+              <div class="cert-org">IBM SkillsBuild</div>
+            </div>
+          </div>
+
+          <div class="cert-card">
+            <div class="cert-icon"><i class="fab fa-react"></i></div>
+            <div class="cert-text">
+              <div class="cert-name">Frontend Developer (React)</div>
+              <div class="cert-org">HackerRank</div>
             </div>
           </div>
 
           <div class="cert-card">
             <div class="cert-icon"><i class="fas fa-check-circle"></i></div>
             <div class="cert-text">
-              <div class="cert-name">Problem Solving — Basic & Intermediate</div>
+              <div class="cert-name">Problem Solving (Basic & Intermediate), SQL (Basic)</div>
               <div class="cert-org">HackerRank</div>
             </div>
           </div>
 
           <div class="cert-card">
-            <div class="cert-icon"><i class="fas fa-database"></i></div>
+            <div class="cert-icon"><i class="fas fa-project-diagram"></i></div>
             <div class="cert-text">
-              <div class="cert-name">SQL — Basic</div>
-              <div class="cert-org">HackerRank</div>
+              <div class="cert-name">Object Oriented Design, React Essential Training</div>
+              <div class="cert-org">LinkedIn Learning</div>
             </div>
           </div>
 
@@ -405,18 +423,10 @@
           </div>
 
           <div class="cert-card">
-            <div class="cert-icon"><i class="fab fa-react"></i></div>
+            <div class="cert-icon"><i class="fas fa-brain"></i></div>
             <div class="cert-text">
-              <div class="cert-name">React Essential Training</div>
-              <div class="cert-org">LinkedIn Learning</div>
-            </div>
-          </div>
-
-          <div class="cert-card">
-            <div class="cert-icon"><i class="fas fa-project-diagram"></i></div>
-            <div class="cert-text">
-              <div class="cert-name">Object Oriented Design</div>
-              <div class="cert-org">LinkedIn Learning</div>
+              <div class="cert-name">AI Foundation Certification</div>
+              <div class="cert-org">Infosys Springboard</div>
             </div>
           </div>
 

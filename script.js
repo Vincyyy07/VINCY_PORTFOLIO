@@ -3,52 +3,60 @@
 ===================================================== */
 
 // ───────────────────────────────────────────
-// Scroll-Telling Intro
+// Theme-Synced Intro
 // ───────────────────────────────────────────
 document.body.classList.add('no-scroll');
 
 const introOverlay = document.getElementById('introOverlay');
-const introTexts = document.querySelectorAll('.intro-text');
-const progressBar = document.getElementById('introProgressBar');
+const syncText1 = document.getElementById('syncText1');
+const syncText2 = document.getElementById('syncText2');
+const actionContainer = document.querySelector('.intro-action');
+const actionText = document.getElementById('actionText');
+const actionLine = document.getElementById('actionLine');
 
-let currentStep = 0;
-const totalSteps = introTexts.length;
-let isAnimating = false;
+function playSyncIntro() {
+  if (!introOverlay) return;
 
-function playIntroStep(stepIndex) {
-  if (stepIndex >= totalSteps) {
-    // Intro finished
+  // 1. Reveal brand text (Smooth entry)
+  setTimeout(() => {
+    if (syncText1) syncText1.classList.add('visible');
+  }, 400);
+
+  // 2. Reveal tagline & action container (Followed by brand)
+  setTimeout(() => {
+    if (syncText2) syncText2.classList.add('visible');
+    if (actionContainer) actionContainer.classList.add('visible');
+  }, 1400);
+
+  // 3. Line strikes and reveals text (The climax)
+  setTimeout(() => {
+    if (actionLine) actionLine.classList.add('strike');
+
+    // Trail the text reveal slightly behind the line
+    setTimeout(() => {
+      if (actionText) actionText.classList.add('reveal-text');
+    }, 150);
+
+  }, 2200);
+
+  // 4. Smooth Fade out overlay after action is complete
+  setTimeout(() => {
     introOverlay.style.opacity = '0';
+    introOverlay.style.filter = 'blur(20px)'; // Extra polish on fade out
+
+    // 5. Cleanup and init AOS
     setTimeout(() => {
       introOverlay.remove();
       document.body.classList.remove('no-scroll');
-
-      // Initialize AOS only after intro finishes so it doesn't trigger prematurely
-      AOS.init({ once: true, duration: 850, easing: 'ease-out-cubic' });
+      if (typeof AOS !== 'undefined') {
+        AOS.init({ once: true, duration: 850, easing: 'ease-out-cubic' });
+      }
     }, 1000);
-    return;
-  }
-
-  isAnimating = true;
-
-  // Update progress bar
-  const progress = ((stepIndex + 1) / totalSteps) * 100;
-  progressBar.style.width = `${progress}%`;
-
-  // Show text
-  const textEl = introTexts[stepIndex];
-  textEl.style.animation = 'textReveal 1.2s ease forwards';
-
-  setTimeout(() => {
-    isAnimating = false;
-    currentStep++;
-    // Auto-play the next step
-    playIntroStep(currentStep);
-  }, 1200);
+  }, 4000);
 }
 
-// Start first step immediately
-playIntroStep(0);
+// Start intro sequence
+window.addEventListener('load', playSyncIntro);
 
 // ───────────────────────────────────────────
 // Typed.js

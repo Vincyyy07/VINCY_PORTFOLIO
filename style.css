@@ -127,7 +127,7 @@ img {
 }
 
 /* ===========================
-   SCROLL-TELLING INTRO
+   THEME-SYNCED INTRO
 =========================== */
 .intro-overlay {
   position: fixed;
@@ -135,10 +135,10 @@ img {
   z-index: 99999;
   background: var(--bg);
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
+  transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
+  overflow: hidden;
 }
 
 .intro-overlay.hidden {
@@ -147,62 +147,243 @@ img {
   pointer-events: none;
 }
 
-.intro-content {
-  position: relative;
-  height: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.intro-text {
+/* Ambient intro orbs mirroring the home background */
+.intro-ambient {
   position: absolute;
-  font-family: 'Outfit', sans-serif;
-  font-size: 3rem;
-  font-weight: 700;
-  color: var(--text);
-  opacity: 0;
-  transform: translateY(20px);
-  text-align: center;
-  white-space: nowrap;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
 }
 
-@keyframes textReveal {
+.intro-noise {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.04;
+  mix-blend-mode: overlay;
+  z-index: 1;
+}
+
+.intro-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.5;
+  z-index: 0;
+}
+
+.orb-a {
+  width: 500px;
+  height: 500px;
+  background: var(--accent);
+  top: -15%;
+  left: -10%;
+  animation: floatOrbA 15s infinite alternate ease-in-out;
+}
+
+.orb-b {
+  width: 450px;
+  height: 450px;
+  background: var(--accent2);
+  bottom: -15%;
+  right: -10%;
+  animation: floatOrbB 20s infinite alternate ease-in-out;
+}
+
+.orb-c {
+  width: 350px;
+  height: 350px;
+  background: #6366f1;
+  top: 40%;
+  left: 30%;
+  animation: floatOrbC 25s infinite alternate ease-in-out;
+  opacity: 0.25;
+}
+
+@keyframes floatOrbA {
   0% {
-    opacity: 0;
-    transform: translateY(15px) scale(0.95);
-  }
-
-  15% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-
-  85% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translate(0, 0) scale(1);
   }
 
   100% {
-    opacity: 0;
-    transform: translateY(-15px) scale(1.05);
+    transform: translate(60px, 80px) scale(1.15);
   }
 }
 
-.intro-progress {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 4px;
-  width: 100%;
-  background: rgba(255, 255, 255, 0.05);
+@keyframes floatOrbB {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  100% {
+    transform: translate(-70px, -60px) scale(1.08);
+  }
 }
 
-.intro-progress-bar {
-  height: 100%;
-  width: 0%;
+@keyframes floatOrbC {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+
+  100% {
+    transform: translate(-40px, 40px) rotate(15deg) scale(1.2);
+  }
+}
+
+.intro-content.sync-mode {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.intro-brand {
+  overflow: hidden;
+}
+
+.brand-text {
+  display: inline-block;
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(3rem, 7vw, 4.8rem);
+  /* Slightly larger */
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -2px;
+  /* Tighter letter spacing for name */
+  transform: translateY(100%) scale(0.95);
+  opacity: 0;
+  filter: blur(10px);
+  transition: transform 1s cubic-bezier(0.19, 1, 0.22, 1), opacity 1s ease, filter 1s ease;
+}
+
+.brand-text.visible {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+  filter: blur(0);
+}
+
+.brand-dot {
+  color: var(--accent);
+  text-shadow: var(--glow);
+}
+
+.intro-tagline {
+  font-size: 0.95rem;
+  /* Slightly smaller for elegance */
+  color: var(--muted);
+  letter-spacing: 8px;
+  /* Even wider spread */
+  text-transform: uppercase;
+  font-weight: 500;
+  opacity: 0;
+  transform: translateY(15px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.6s, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.6s;
+}
+
+.intro-tagline.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.intro-action {
+  margin-top: 24px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  opacity: 0;
+  transition: opacity 0.6s ease 0.8s;
+  overflow: visible;
+}
+
+.intro-action.visible {
+  opacity: 1;
+}
+
+.action-text {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--accent);
   background: linear-gradient(90deg, var(--accent), var(--accent2));
-  transition: width 0.1s linear;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  clip-path: inset(0 100% 0 0);
+  /* Hidden left-to-right */
+  transition: clip-path 1.2s cubic-bezier(0.86, 0, 0.07, 1);
+  letter-spacing: 1px;
+}
+
+.action-text.reveal-text {
+  clip-path: inset(0 0 0 0);
+}
+
+.action-line {
+  position: absolute;
+  top: 50%;
+  left: -20px;
+  width: 0;
+  height: 1px;
+  background: #ffffff;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 0 0 15px rgba(255, 255, 255, 0.3);
+  transform: translateY(-50%);
+  opacity: 0;
+  z-index: 2;
+}
+
+/* Add a thin, small, and sharp FILLED arrowhead */
+.action-line::after {
+  content: '';
+  position: absolute;
+  right: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+  border-left: 14px solid #ffffff;
+  /* Sharp and thin filled triangle */
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
+  z-index: 3;
+}
+
+.action-line.strike {
+  opacity: 1;
+  animation: strikeThrough 1.2s cubic-bezier(0.75, 0, 0.25, 1) forwards;
+}
+
+@keyframes strikeThrough {
+  0% {
+    left: -20px;
+    width: 0;
+    opacity: 1;
+  }
+
+  40% {
+    left: 0;
+    width: 60%;
+  }
+
+  /* Line extends across the text */
+  80% {
+    left: 100%;
+    width: 40px;
+  }
+
+  /* Line detaches and becomes a projectile */
+  100% {
+    left: 150vw;
+    width: 10px;
+    opacity: 0;
+  }
+
+  /* Shoots off screen */
 }
 
 /* Scroll lock utility */
