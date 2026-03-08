@@ -4,8 +4,6 @@ A clean, modern, and interactive personal portfolio website designed to showcase
 
 It is built with a focus on premium aesthetics, featuring dark/light mode toggling, dynamic cursor glows, ambient particle backgrounds, and smooth scroll animations.
 
-![Portfolio Preview](./assets/photo.jpeg) *(Replace this line with an actual screenshot of the live site if desired)*
-
 ## ✨ Features
 
 - **Theme Toggling**: Seamless transition between fully realized Light and Dark modes.
