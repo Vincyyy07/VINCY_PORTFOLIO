@@ -55,6 +55,11 @@ body {
   transition: background var(--transition), color var(--transition);
 }
 
+html,
+body {
+  max-width: 100%;
+}
+
 input,
 textarea,
 button {
@@ -1059,6 +1064,11 @@ body.light .topbar {
   color: var(--text);
   font-weight: 500;
   overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.info-card>div {
+  min-width: 0;
 }
 
 .info-val:hover {
@@ -1649,6 +1659,11 @@ body.light .topbar {
   font-size: 0.88rem;
   font-weight: 500;
   overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.contact-link>div {
+  min-width: 0;
 }
 
 /* Contact Form */
@@ -1868,13 +1883,14 @@ footer {
   }
 
   .topbar {
-    padding-left: 24px;
+    height: 56px;
+    padding: 0 18px;
   }
 
   #home {
     grid-template-columns: 1fr;
     text-align: center;
-    padding-top: 110px;
+    padding: 90px 20px 60px;
   }
 
   .home-content {
@@ -1973,10 +1989,12 @@ footer {
 
   .social-chip {
     justify-content: center;
+    padding: 10px 14px;
   }
 
   .btn {
     padding: 12px 18px;
+    min-height: 44px;
   }
 
   .section-title {
@@ -2008,6 +2026,29 @@ footer {
 
   .tl-date {
     white-space: normal;
+    padding: 6px 10px;
+    font-size: 0.78rem;
+  }
+
+  .timeline {
+    padding-left: 24px;
+  }
+
+  .timeline-dot {
+    left: -21px;
+  }
+
+  .timeline-card:hover,
+  .ach-card:hover,
+  .cert-card:hover,
+  .contact-link:hover,
+  .project-card:hover,
+  .skill-category:hover,
+  .info-card:hover,
+  .footer-socials a:hover,
+  .social-chip:hover,
+  .proj-link:hover {
+    box-shadow: none;
   }
 
   .intro-content.sync-mode {
@@ -2071,6 +2112,33 @@ footer {
   .contact-link {
     padding: 12px 14px;
     gap: 12px;
+  }
+
+  .timeline {
+    padding-left: 20px;
+  }
+
+  .timeline-dot {
+    left: -17px;
+    width: 12px;
+    height: 12px;
+    border-width: 2px;
+  }
+
+  .timeline-card {
+    padding: 16px;
+  }
+
+  .tl-title {
+    font-size: 1.03rem;
+  }
+
+  .intro-tagline {
+    letter-spacing: 2px;
+  }
+
+  .action-line {
+    display: none;
   }
 }
 
