@@ -65,7 +65,7 @@ new Typed('#typed', {
   strings: [
     'Front-End Developer',
     'CSE Student @ AEC',
-    'React Enthusiast',
+    'Graphic Designer',
     'Problem Solver',
     'UI/UX Explorer'
   ],
