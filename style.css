@@ -1838,6 +1838,8 @@ footer {
 
   .home-avatar {
     order: 1;
+    max-width: 320px;
+    margin: 0 auto;
   }
 
   .home-cta,
