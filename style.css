@@ -55,6 +55,12 @@ body {
   transition: background var(--transition), color var(--transition);
 }
 
+input,
+textarea,
+button {
+  font: inherit;
+}
+
 a {
   text-decoration: none;
   color: inherit;
@@ -1052,6 +1058,7 @@ body.light .topbar {
   font-size: 0.88rem;
   color: var(--text);
   font-weight: 500;
+  overflow-wrap: anywhere;
 }
 
 .info-val:hover {
@@ -1641,6 +1648,7 @@ body.light .topbar {
 .cl-val {
   font-size: 0.88rem;
   font-weight: 500;
+  overflow-wrap: anywhere;
 }
 
 /* Contact Form */
@@ -1753,6 +1761,7 @@ footer {
 .footer-copy {
   color: var(--muted);
   font-size: 0.85rem;
+  overflow-wrap: anywhere;
 }
 
 .heart {
@@ -1817,6 +1826,42 @@ footer {
 /* ===========================
    RESPONSIVE
 =========================== */
+@media (max-width: 900px) {
+  .topbar {
+    height: 56px;
+    padding: 0 18px;
+  }
+
+  #home {
+    gap: 40px;
+    padding: 86px 20px 60px;
+  }
+
+  .section {
+    padding: 104px 20px 58px;
+  }
+
+  .section-title {
+    margin-bottom: 40px;
+  }
+
+  .home-sub {
+    max-width: 100%;
+  }
+
+  .project-card,
+  .timeline-card,
+  .contact-form {
+    padding: 24px;
+  }
+
+  .intro-tagline {
+    letter-spacing: 4px;
+    text-align: center;
+    padding: 0 16px;
+  }
+}
+
 @media (max-width: 1050px) {
   #sidenav {
     display: none;
@@ -1881,12 +1926,62 @@ footer {
     padding: 100px 16px 50px;
   }
 
+  .topbar {
+    height: 54px;
+    padding: 0 14px;
+  }
+
+  .topbar-logo {
+    font-size: 1.3rem;
+  }
+
+  #home {
+    min-height: auto;
+    gap: 28px;
+    padding: 82px 16px 50px;
+  }
+
   .home-title {
-    font-size: 2.2rem;
+    font-size: 2rem;
+  }
+
+  .typed-line {
+    font-size: 1rem;
+    min-height: 26px;
+  }
+
+  .home-sub {
+    font-size: 0.94rem;
+    line-height: 1.75;
+    margin-bottom: 24px;
+  }
+
+  .home-cta {
+    width: 100%;
+  }
+
+  .home-cta .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .social-row {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .social-chip {
+    justify-content: center;
+  }
+
+  .btn {
+    padding: 12px 18px;
   }
 
   .section-title {
     font-size: 1.8rem;
+    margin-bottom: 32px;
   }
 
   .photo-card img {
@@ -1901,9 +1996,101 @@ footer {
     grid-template-columns: 1fr;
   }
 
+  .project-card,
+  .timeline-card,
+  .contact-form,
+  .skill-category,
+  .cert-card,
+  .ach-card,
+  .edu-card {
+    padding: 18px;
+  }
+
+  .tl-date {
+    white-space: normal;
+  }
+
+  .intro-content.sync-mode {
+    gap: 12px;
+    padding: 0 14px;
+    text-align: center;
+  }
+
+  .brand-text {
+    font-size: clamp(2.2rem, 11vw, 3.2rem);
+    letter-spacing: -1px;
+  }
+
+  .intro-tagline {
+    font-size: 0.72rem;
+    letter-spacing: 3px;
+  }
+
+  .action-text {
+    font-size: 1.05rem;
+  }
+
+  .back-top {
+    right: 14px;
+    bottom: 14px;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    font-size: 16px;
+  }
+
   .footer-inner {
     flex-direction: column;
     align-items: center;
     text-align: center;
+  }
+}
+
+@media (max-width: 420px) {
+  .section {
+    padding: 94px 12px 44px;
+  }
+
+  #home {
+    padding: 78px 12px 44px;
+  }
+
+  .home-title {
+    font-size: 1.8rem;
+  }
+
+  .section-title {
+    font-size: 1.6rem;
+  }
+
+  .section-label {
+    letter-spacing: 2px;
+  }
+
+  .contact-link {
+    padding: 12px 14px;
+    gap: 12px;
+  }
+}
+
+@media (pointer: coarse) {
+  .cursor-glow {
+    display: none;
+  }
+
+  .btn:hover,
+  .btn-ghost:hover,
+  .project-card:hover,
+  .skill-category:hover,
+  .contact-link:hover,
+  .cert-card:hover,
+  .ach-card:hover,
+  .timeline-card:hover,
+  .info-card:hover,
+  .footer-socials a:hover,
+  .social-chip:hover,
+  .proj-link:hover {
+    transform: none;
   }
 }
