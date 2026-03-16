@@ -11,7 +11,7 @@ It is built with a focus on premium aesthetics, featuring dark/light mode toggli
 - **Scroll-Telling Intro**: A theme-synced custom intro sequence with strike-through animations.
 - **Scroll Animations**: Uses AOS (Animate On Scroll) for revealing elements dynamically as you navigate down the page.
 - **Responsive Design**: Designed elegantly for both desktop monitors and mobile devices, ensuring a perfect layout at all breakpoints.
-- **Contact Form**: Functional UI layer for a quick email setup directly opening your native mail client.
+- **Contact Form**: Functional UI layer for a quick email setup, directly opening your native mail client.
 - **Dynamic Text**: Utilizes Typed.js for an engaging, typing-style subtitle sequence.
 
 ## 🛠️ Tech Stack
