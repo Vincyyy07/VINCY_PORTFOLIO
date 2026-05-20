@@ -516,12 +516,19 @@
     </footer>
   </div>
 
-  <!-- ===== AI CHATBOT (VINCYBOT) ===== -->
+  <!-- ===== AI CHATBOT (VIBOT) ===== -->
   <!-- Floating chat bubble -->
-  <button class="chatbot-trigger" id="chatbotTrigger" onclick="toggleChatbot()" title="Chat with VincyBot">
-    <div class="trigger-glow"></div>
-    <i class="fas fa-robot"></i>
+  <button class="chatbot-trigger" id="chatbotTrigger" onclick="toggleChatbot()" title="Chat with ViBot">
+    <div class="trigger-orb">
+      <div class="orb-core"></div>
+      <div class="orb-wave a"></div>
+      <div class="orb-wave b"></div>
+      <div class="orb-icon">
+        <span class="orb-logo">Vi</span>
+      </div>
+    </div>
     <span class="trigger-ping"></span>
+    <div class="trigger-tooltip">Chat with ViBot 👋</div>
   </button>
 
   <!-- Chatbot Window -->
@@ -530,11 +537,13 @@
     <div class="chat-header">
       <div class="chat-header-profile">
         <div class="chat-avatar">
-          <span>RV</span>
+          <div class="avatar-orb">
+            <span class="avatar-logo">Vi</span>
+          </div>
           <span class="chat-status-dot"></span>
         </div>
         <div class="chat-header-info">
-          <div class="chat-bot-name">VincyBot</div>
+          <div class="chat-bot-name">ViBot</div>
           <div class="chat-bot-status">Online · AI Assistant</div>
         </div>
       </div>
@@ -565,7 +574,7 @@
 
     <!-- Chat Footer -->
     <form class="chat-footer" id="chatForm" onsubmit="handleChatSubmit(event)">
-      <input type="text" id="chatInput" placeholder="Ask VincyBot anything..." autocomplete="off" required />
+      <input type="text" id="chatInput" placeholder="Ask ViBot Portfolio..." autocomplete="off" required />
       <button type="submit" class="chat-send-btn" id="chatSendBtn" title="Send message">
         <i class="fas fa-paper-plane"></i>
       </button>

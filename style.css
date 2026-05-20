@@ -2247,59 +2247,149 @@ footer {
   bottom: 92px !important;
 }
 
-/* Floating Trigger Button */
+/* Floating Trigger Button: Morphing Fluid AI Orb */
 .chatbot-trigger {
   position: fixed;
   bottom: 24px;
   right: 24px;
-  width: 56px;
-  height: 56px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  background: transparent;
   border: none;
-  color: #ffffff;
-  font-size: 24px;
   cursor: pointer;
   z-index: 999;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 32px rgba(108, 184, 255, 0.35);
-  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  outline: none;
   overflow: visible;
 }
 
 .chatbot-trigger:hover {
-  transform: scale(1.1) rotate(8deg);
-  box-shadow: 0 12px 40px rgba(108, 184, 255, 0.5);
+  transform: scale(1.15) translateY(-2px);
 }
 
-.trigger-glow {
+/* Tooltip */
+.trigger-tooltip {
   position: absolute;
-  inset: -4px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  z-index: -1;
-  opacity: 0.4;
-  filter: blur(8px);
-  animation: triggerPulse 2.5s infinite alternate ease-in-out;
+  right: 76px;
+  background: rgba(13, 17, 32, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 8px 14px;
+  border-radius: 20px;
+  color: var(--text);
+  font-family: 'Outfit', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
-@keyframes triggerPulse {
-  0% { transform: scale(0.95); opacity: 0.3; }
-  100% { transform: scale(1.15); opacity: 0.6; }
+.chatbot-trigger:hover .trigger-tooltip {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Fluid Orb Structure */
+.trigger-orb {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #8b5cf6, #3b82f6, #00f2fe);
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4), inset 0 2px 10px rgba(255, 255, 255, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  animation: orbMorph 8s ease-in-out infinite;
+}
+
+.orb-core {
+  position: absolute;
+  width: 80%;
+  height: 80%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.15) 0%, transparent 60%);
+  filter: blur(2px);
+}
+
+/* Morphing Liquid Waves */
+.orb-wave {
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  width: 120%;
+  height: 120%;
+  border-radius: 43%;
+  background: rgba(255, 255, 255, 0.06);
+  pointer-events: none;
+}
+
+.orb-wave.a {
+  animation: waveRotate 10s linear infinite;
+}
+
+.orb-wave.b {
+  animation: waveRotate 14s linear infinite reverse;
+  border-radius: 40%;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.orb-icon {
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.orb-logo {
+  font-family: 'Outfit', sans-serif;
+  font-size: 18px;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  user-select: none;
 }
 
 .trigger-ping {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: -2px;
+  right: -2px;
   width: 12px;
   height: 12px;
-  background: var(--accent3);
+  background: #10b981;
   border: 2px solid var(--bg);
   border-radius: 50%;
+  z-index: 10;
   animation: pingEffect 1.8s infinite;
+}
+
+@keyframes orbMorph {
+  0%, 100% {
+    border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+    transform: rotate(0deg);
+  }
+  33% {
+    border-radius: 70% 30% 52% 48% / 60% 40% 60% 40%;
+  }
+  66% {
+    border-radius: 50% 50% 30% 70% / 40% 60% 40% 60%;
+    transform: rotate(180deg);
+  }
+}
+
+@keyframes waveRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 @keyframes pingEffect {
@@ -2361,15 +2451,30 @@ footer {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  color: #ffffff;
-  font-family: 'Outfit', sans-serif;
-  font-weight: 800;
-  font-size: 14px;
-  display: grid;
-  place-items: center;
   position: relative;
+}
+
+.avatar-orb {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #8b5cf6, #3b82f6, #00f2fe);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  animation: orbMorph 8s ease-in-out infinite;
+}
+
+.avatar-logo {
+  font-family: 'Outfit', sans-serif;
+  font-size: 12px;
+  font-weight: 900;
+  color: #ffffff;
   letter-spacing: -0.5px;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  user-select: none;
 }
 
 .chat-status-dot {

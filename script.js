@@ -335,7 +335,7 @@ function appendUserMessage(text) {
 function appendBotMessage(text) {
   const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   const formattedText = parseBotMarkdown(text);
-  
+
   const msgHtml = `
     <div class="chat-message bot">
       <div class="msg-content">${formattedText}</div>
@@ -373,7 +373,7 @@ function scrollToBottom() {
 
 // Escape HTML tags to prevent XSS
 function escapeHTML(str) {
-  return str.replace(/[&<>'"]/g, 
+  return str.replace(/[&<>'"]/g,
     tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
   );
 }
@@ -394,7 +394,7 @@ function handleChatSubmit(e) {
   e.preventDefault();
   const query = chatInput.value.trim();
   if (!query) return;
-  
+
   chatInput.value = '';
   processQuery(query);
 }
@@ -408,7 +408,7 @@ function handleSuggestion(suggestionText) {
 function processQuery(query) {
   appendUserMessage(query);
   showTypingIndicator();
-  
+
   setTimeout(() => {
     removeTypingIndicator();
     const localResponse = getLocalBotResponse(query);
@@ -420,12 +420,12 @@ function processQuery(query) {
 // Local Semantic Matcher loaded with Portfolio Knowledge Base
 function getLocalBotResponse(input) {
   const text = input.toLowerCase().trim();
-  
+
   const categories = [
     {
       id: 'greeting',
       keywords: ['hi', 'hello', 'hey', 'greetings', 'yo', 'sup', 'bot', 'vincybot', 'who are you', 'what is your name', 'start'],
-      response: "Hey there! 👋 I'm **VincyBot**, Raj Vincy's custom AI assistant. I'm here to answer questions about his skills, projects, achievements, and background! Feel free to ask me anything or click the suggestion chips below."
+      response: "Hey there! 👋 I'm **ViBot**, Raj Vincy's custom AI assistant. I'm here to answer questions about his skills, projects, achievements, and background! Feel free to ask me anything or click the suggestion chips below."
     },
     {
       id: 'about',
@@ -473,11 +473,11 @@ function getLocalBotResponse(input) {
       response: "Here's one for you:<br><br>*Why do front-end developers eat lunch alone?*<br>Because they don't know how to **join** tables! 😂 (Get it? SQL joins!)"
     }
   ];
-  
+
   // Score each category based on keyword matches
   let bestMatch = null;
   let highestScore = 0;
-  
+
   categories.forEach(cat => {
     let score = 0;
     cat.keywords.forEach(keyword => {
@@ -491,17 +491,17 @@ function getLocalBotResponse(input) {
         score += 1;
       }
     });
-    
+
     if (score > highestScore) {
       highestScore = score;
       bestMatch = cat;
     }
   });
-  
+
   if (highestScore > 0 && bestMatch) {
     return bestMatch.response;
   }
-  
+
   // Default fallback response
   return "I'm not quite sure about that specific question, but I'd love to help! You can ask me about Raj's **skills**, **projects**, **education**, **certifications**, or **how to contact him**. <br><br>Or just click one of the quick chips below! 👇";
 }
