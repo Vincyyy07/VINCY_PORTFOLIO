@@ -539,29 +539,12 @@
         </div>
       </div>
       <div class="chat-header-actions">
-        <button class="chat-action-btn" onclick="toggleDevMode()" title="Developer Settings">
-          <i class="fas fa-cog"></i>
-        </button>
         <button class="chat-action-btn" onclick="toggleMinimize()" id="chatMinBtn" title="Minimize">
           <i class="fas fa-minus"></i>
         </button>
         <button class="chat-action-btn close-btn" onclick="toggleChatbot()" title="Close">
           <i class="fas fa-times"></i>
         </button>
-      </div>
-    </div>
-
-    <!-- Developer Settings Overlay -->
-    <div class="chat-dev-overlay" id="chatDevOverlay">
-      <div class="dev-overlay-content">
-        <h4><i class="fas fa-code"></i> Developer Settings</h4>
-        <p>By default, VincyBot runs on a smart, secure local facts matcher. Paste a Gemini API Key below to enable live conversational AI.</p>
-        <div class="dev-input-group">
-          <input type="password" id="geminiApiKey" placeholder="Paste Gemini API Key here..." />
-          <button onclick="saveApiKey()" class="btn-dev-save">Save Key</button>
-        </div>
-        <div class="dev-status-msg" id="devStatusMsg"></div>
-        <button onclick="toggleDevMode()" class="btn-dev-close">Close Settings</button>
       </div>
     </div>
 

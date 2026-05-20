@@ -277,25 +277,15 @@ document.querySelectorAll('.project-card').forEach(card => {
 // ───────────────────────────────────────────
 let isChatbotOpen = false;
 let isMinimized = false;
-let geminiApiKey = localStorage.getItem('gemini_api_key') || '';
-let isDevModeOpen = false;
 
 const chatbotWindow = document.getElementById('chatbotWindow');
 const chatMessages = document.getElementById('chatMessages');
 const chatInput = document.getElementById('chatInput');
-const geminiApiKeyInput = document.getElementById('geminiApiKey');
-const devStatusMsg = document.getElementById('devStatusMsg');
-const chatDevOverlay = document.getElementById('chatDevOverlay');
 
 // Initialize Chatbot with a Welcome Message if empty
 function initChatbot() {
   if (chatMessages && chatMessages.children.length === 0) {
     appendBotMessage("Hey there! 👋 I'm **VincyBot**, Raj Vincy's AI assistant. Ask me anything about his skills, projects, certifications, or experience, and I'll answer instantly! 🤖");
-    
-    // Fill key input from storage
-    if (geminiApiKeyInput) {
-      geminiApiKeyInput.value = geminiApiKey;
-    }
   }
 }
 
@@ -326,37 +316,6 @@ function toggleMinimize() {
     chatbotWindow.classList.remove('minimized');
     if (minBtn) minBtn.innerHTML = '<i class="fas fa-minus"></i>';
   }
-}
-
-// Toggle Dev Mode Setting Overlay
-function toggleDevMode() {
-  isDevModeOpen = !isDevModeOpen;
-  if (isDevModeOpen) {
-    chatDevOverlay.classList.add('open');
-  } else {
-    chatDevOverlay.classList.remove('open');
-    if (devStatusMsg) devStatusMsg.textContent = '';
-  }
-}
-
-// Save Gemini API Key
-function saveApiKey() {
-  const key = geminiApiKeyInput.value.trim();
-  if (key) {
-    geminiApiKey = key;
-    localStorage.setItem('gemini_api_key', key);
-    devStatusMsg.textContent = '✅ API Key saved successfully!';
-    devStatusMsg.className = 'dev-status-msg success';
-  } else {
-    geminiApiKey = '';
-    localStorage.removeItem('gemini_api_key');
-    devStatusMsg.textContent = '🗑️ API Key cleared. Local Mode active.';
-    devStatusMsg.className = 'dev-status-msg error';
-  }
-  
-  setTimeout(() => {
-    toggleDevMode();
-  }, 1000);
 }
 
 // Append User Message to Chat Window
@@ -445,86 +404,18 @@ function handleSuggestion(suggestionText) {
   processQuery(suggestionText);
 }
 
-// Process user queries (Hybrid Logic)
+// Process user queries (Local Offline Logic)
 function processQuery(query) {
   appendUserMessage(query);
   showTypingIndicator();
   
-  setTimeout(async () => {
+  setTimeout(() => {
     removeTypingIndicator();
-    
-    // Check if Gemini Live Key is active
-    if (geminiApiKey) {
-      try {
-        const liveResponse = await fetchGeminiLiveResponse(query);
-        appendBotMessage(liveResponse);
-      } catch (err) {
-        console.error("Gemini API Error:", err);
-        // Fallback to local offline matcher on error
-        const localResponse = getLocalBotResponse(query);
-        appendBotMessage(`*(API Fallback)* ${localResponse}`);
-      }
-    } else {
-      // Local offline matcher
-      const localResponse = getLocalBotResponse(query);
-      appendBotMessage(localResponse);
-    }
+    const localResponse = getLocalBotResponse(query);
+    appendBotMessage(localResponse);
   }, 1000);
 }
 
-// Live Gemini API Client Call
-async function fetchGeminiLiveResponse(userQuery) {
-  const portfolioFacts = `
-    You are VincyBot, an interactive AI Assistant for Raj Vincy Degapati's portfolio.
-    Answer the user's questions perfectly, professionally, and warmly.
-    Always format your responses cleanly with bullet points, bold tags, and spacing.
-    Keep answers very concise (under 3-4 sentences max if possible) so it fits in a mobile chat panel.
-    If the user asks questions unrelated to Raj Vincy's career, skills, projects, or background, politely reply that you can only discuss Raj Vincy's portfolio facts.
-    
-    Here is Raj's factsheet:
-    - Name: Raj Vincy Degapati
-    - Education: Computer Science & Engineering (B.Tech) student at Aditya Engineering College (A), Surampalem. CGPA: 8.45 (2023 - Present).
-    - Email: degapatirajvincy@gmail.com
-    - Phone: +91 6305575411
-    - Location: Andhra Pradesh, India
-    - LinkedIn: https://linkedin.com/in/raj-vincy-degapati
-    - GitHub: https://github.com/Vincyyy07
-    - Trainee Internship: Front-End Developer trainee at 1Stop.ai (May - June 2025), built a portfolio.
-    - Projects:
-      1. Secure Password: Password checker using React and TypeScript. GitHub: https://github.com/Vincyyy07/secure-password, Demo: https://secure-password-lac.vercel.app
-      2. MocMate AI: AI interview practice platform using React, TS, Tailwind CSS. GitHub: https://github.com/Vincyyy07/MocMate-AI, Demo: https://team-code-zenith-main.onrender.com/
-    - Skills:
-      - Languages: C, C++, Python, JavaScript, TypeScript
-      - Web: HTML5, CSS3, React, Tailwind CSS, Bootstrap, Vite
-      - DB: MongoDB, MySQL, SQLite
-      - Concepts: Problem Solving, DSA, OOP, Responsive Design, UI/UX
-    - Achievements:
-      - CodeChef: 1-Star Coder (Max: 1179)
-      - LeetCode: 150+ Solved
-      - HackerRank: 5⭐ Problem Solving, 5⭐ C, 4⭐ C++
-    - Certifications: Web Dev (IBM SkillsBuild), React (HackerRank), Problem Solving (HackerRank), OOP (LinkedIn Learning).
-  `;
-
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiApiKey}`;
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      contents: [{
-        parts: [{
-          text: `System Prompt: ${portfolioFacts}\n\nUser Question: ${userQuery}`
-        }]
-      }]
-    })
-  });
-  
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
-  
-  const data = await response.json();
-  return data.candidates[0].content.parts[0].text;
-}
 
 // Local Semantic Matcher loaded with Portfolio Knowledge Base
 function getLocalBotResponse(input) {
