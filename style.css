@@ -2247,34 +2247,49 @@ footer {
   bottom: 92px !important;
 }
 
-/* Floating Trigger Button: Morphing Fluid AI Orb */
+/* Floating Trigger Button: Premium Glassmorphic Circle */
 .chatbot-trigger {
   position: fixed;
   bottom: 24px;
   right: 24px;
-  width: 60px;
-  height: 60px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
-  background: transparent;
-  border: none;
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   cursor: pointer;
   z-index: 999;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 8px 32px rgba(139, 92, 246, 0.4), inset 0 2px 8px rgba(255, 255, 255, 0.3);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
   outline: none;
   overflow: visible;
 }
 
 .chatbot-trigger:hover {
-  transform: scale(1.15) translateY(-2px);
+  transform: scale(1.1) translateY(-2px);
+  box-shadow: 0 12px 40px rgba(139, 92, 246, 0.55), inset 0 2px 8px rgba(255, 255, 255, 0.4);
+}
+
+.chatbot-trigger-icon {
+  font-size: 23px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.chatbot-trigger:hover .chatbot-trigger-icon {
+  transform: scale(1.08) rotate(4deg);
 }
 
 /* Tooltip */
 .trigger-tooltip {
   position: absolute;
-  right: 76px;
+  right: 72px;
   background: rgba(13, 17, 32, 0.85);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -2297,65 +2312,10 @@ footer {
   transform: translateX(0);
 }
 
-/* Guitar Pick Shape Structure */
-.trigger-orb {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  /* Classic guitar pick geometry: pointed at bottom right, then rotated -45deg to point down */
-  border-radius: 50% 50% 20% 50% / 50% 50% 50% 20%;
-  transform: rotate(-45deg);
-  background: radial-gradient(circle at 35% 35%, #8b5cf6, #3b82f6, #00f2fe);
-  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4), inset 0 2px 10px rgba(255, 255, 255, 0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
-}
-
-.chatbot-trigger:hover .trigger-orb {
-  transform: rotate(-45deg) scale(1.08);
-  box-shadow: 0 12px 30px rgba(59, 130, 246, 0.6), inset 0 2px 10px rgba(255, 255, 255, 0.5);
-}
-
-.orb-core {
-  position: absolute;
-  width: 80%;
-  height: 80%;
-  border-radius: 50%;
-  background: radial-gradient(circle at 60% 60%, rgba(255, 255, 255, 0.18) 0%, transparent 60%);
-  filter: blur(2px);
-}
-
-/* waves disabled */
-.orb-wave {
-  display: none;
-}
-
-.orb-icon {
-  z-index: 3;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* Counter-rotate by 45deg to keep Vi standing straight! */
-  transform: rotate(45deg);
-}
-
-.orb-logo {
-  font-family: 'Outfit', sans-serif;
-  font-size: 19px;
-  font-weight: 900;
-  color: #ffffff;
-  letter-spacing: -0.5px;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  user-select: none;
-}
-
 .trigger-ping {
   position: absolute;
-  top: -2px;
-  right: -2px;
+  top: -1px;
+  right: -1px;
   width: 12px;
   height: 12px;
   background: #10b981;
@@ -2427,12 +2387,11 @@ footer {
   position: relative;
 }
 
-.avatar-orb {
+.avatar-icon-wrapper {
   width: 100%;
   height: 100%;
-  border-radius: 50% 50% 20% 50% / 50% 50% 50% 20%;
-  transform: rotate(-45deg);
-  background: radial-gradient(circle at 35% 35%, #8b5cf6, #3b82f6, #00f2fe);
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
   box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
   display: flex;
   align-items: center;
@@ -2440,16 +2399,9 @@ footer {
   overflow: hidden;
 }
 
-.avatar-logo {
-  font-family: 'Outfit', sans-serif;
-  font-size: 12px;
-  font-weight: 900;
+.avatar-icon-wrapper i {
+  font-size: 15px;
   color: #ffffff;
-  letter-spacing: -0.5px;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-  user-select: none;
-  /* Counter-rotate to stay upright! */
-  transform: rotate(45deg);
 }
 
 .chat-status-dot {
