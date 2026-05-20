@@ -2297,19 +2297,26 @@ footer {
   transform: translateX(0);
 }
 
-/* Fluid Orb Structure */
+/* Guitar Pick Shape Structure */
 .trigger-orb {
   position: relative;
   width: 100%;
   height: 100%;
-  border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, #8b5cf6, #3b82f6, #00f2fe);
+  /* Classic guitar pick geometry: pointed at bottom right, then rotated -45deg to point down */
+  border-radius: 50% 50% 20% 50% / 50% 50% 50% 20%;
+  transform: rotate(-45deg);
+  background: radial-gradient(circle at 35% 35%, #8b5cf6, #3b82f6, #00f2fe);
   box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4), inset 0 2px 10px rgba(255, 255, 255, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  animation: orbMorph 8s ease-in-out infinite;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+}
+
+.chatbot-trigger:hover .trigger-orb {
+  transform: rotate(-45deg) scale(1.08);
+  box-shadow: 0 12px 30px rgba(59, 130, 246, 0.6), inset 0 2px 10px rgba(255, 255, 255, 0.5);
 }
 
 .orb-core {
@@ -2317,30 +2324,13 @@ footer {
   width: 80%;
   height: 80%;
   border-radius: 50%;
-  background: radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.15) 0%, transparent 60%);
+  background: radial-gradient(circle at 60% 60%, rgba(255, 255, 255, 0.18) 0%, transparent 60%);
   filter: blur(2px);
 }
 
-/* Morphing Liquid Waves */
+/* waves disabled */
 .orb-wave {
-  position: absolute;
-  top: -10%;
-  left: -10%;
-  width: 120%;
-  height: 120%;
-  border-radius: 43%;
-  background: rgba(255, 255, 255, 0.06);
-  pointer-events: none;
-}
-
-.orb-wave.a {
-  animation: waveRotate 10s linear infinite;
-}
-
-.orb-wave.b {
-  animation: waveRotate 14s linear infinite reverse;
-  border-radius: 40%;
-  background: rgba(255, 255, 255, 0.04);
+  display: none;
 }
 
 .orb-icon {
@@ -2348,15 +2338,17 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
+  /* Counter-rotate by 45deg to keep Vi standing straight! */
+  transform: rotate(45deg);
 }
 
 .orb-logo {
   font-family: 'Outfit', sans-serif;
-  font-size: 18px;
+  font-size: 19px;
   font-weight: 900;
   color: #ffffff;
   letter-spacing: -0.5px;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   user-select: none;
 }
 
@@ -2371,25 +2363,6 @@ footer {
   border-radius: 50%;
   z-index: 10;
   animation: pingEffect 1.8s infinite;
-}
-
-@keyframes orbMorph {
-  0%, 100% {
-    border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
-    transform: rotate(0deg);
-  }
-  33% {
-    border-radius: 70% 30% 52% 48% / 60% 40% 60% 40%;
-  }
-  66% {
-    border-radius: 50% 50% 30% 70% / 40% 60% 40% 60%;
-    transform: rotate(180deg);
-  }
-}
-
-@keyframes waveRotate {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
 }
 
 @keyframes pingEffect {
@@ -2457,14 +2430,14 @@ footer {
 .avatar-orb {
   width: 100%;
   height: 100%;
-  border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, #8b5cf6, #3b82f6, #00f2fe);
+  border-radius: 50% 50% 20% 50% / 50% 50% 50% 20%;
+  transform: rotate(-45deg);
+  background: radial-gradient(circle at 35% 35%, #8b5cf6, #3b82f6, #00f2fe);
   box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  animation: orbMorph 8s ease-in-out infinite;
 }
 
 .avatar-logo {
@@ -2475,6 +2448,8 @@ footer {
   letter-spacing: -0.5px;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
   user-select: none;
+  /* Counter-rotate to stay upright! */
+  transform: rotate(45deg);
 }
 
 .chat-status-dot {
