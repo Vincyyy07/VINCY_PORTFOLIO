@@ -271,3 +271,345 @@ document.querySelectorAll('.project-card').forEach(card => {
     }
   });
 });
+
+// ───────────────────────────────────────────
+// AI Chatbot Logic (VincyBot)
+// ───────────────────────────────────────────
+let isChatbotOpen = false;
+let isMinimized = false;
+let geminiApiKey = localStorage.getItem('gemini_api_key') || '';
+let isDevModeOpen = false;
+
+const chatbotWindow = document.getElementById('chatbotWindow');
+const chatMessages = document.getElementById('chatMessages');
+const chatInput = document.getElementById('chatInput');
+const geminiApiKeyInput = document.getElementById('geminiApiKey');
+const devStatusMsg = document.getElementById('devStatusMsg');
+const chatDevOverlay = document.getElementById('chatDevOverlay');
+
+// Initialize Chatbot with a Welcome Message if empty
+function initChatbot() {
+  if (chatMessages && chatMessages.children.length === 0) {
+    appendBotMessage("Hey there! 👋 I'm **VincyBot**, Raj Vincy's AI assistant. Ask me anything about his skills, projects, certifications, or experience, and I'll answer instantly! 🤖");
+    
+    // Fill key input from storage
+    if (geminiApiKeyInput) {
+      geminiApiKeyInput.value = geminiApiKey;
+    }
+  }
+}
+
+// Toggle Open/Close
+function toggleChatbot() {
+  isChatbotOpen = !isChatbotOpen;
+  if (isChatbotOpen) {
+    chatbotWindow.classList.add('open');
+    initChatbot();
+    // Scroll to bottom
+    setTimeout(() => {
+      const chatBody = document.getElementById('chatBody');
+      if (chatBody) chatBody.scrollTop = chatBody.scrollHeight;
+    }, 100);
+  } else {
+    chatbotWindow.classList.remove('open');
+  }
+}
+
+// Toggle Minimize
+function toggleMinimize() {
+  isMinimized = !isMinimized;
+  const minBtn = document.getElementById('chatMinBtn');
+  if (isMinimized) {
+    chatbotWindow.classList.add('minimized');
+    if (minBtn) minBtn.innerHTML = '<i class="fas fa-chevron-up"></i>';
+  } else {
+    chatbotWindow.classList.remove('minimized');
+    if (minBtn) minBtn.innerHTML = '<i class="fas fa-minus"></i>';
+  }
+}
+
+// Toggle Dev Mode Setting Overlay
+function toggleDevMode() {
+  isDevModeOpen = !isDevModeOpen;
+  if (isDevModeOpen) {
+    chatDevOverlay.classList.add('open');
+  } else {
+    chatDevOverlay.classList.remove('open');
+    if (devStatusMsg) devStatusMsg.textContent = '';
+  }
+}
+
+// Save Gemini API Key
+function saveApiKey() {
+  const key = geminiApiKeyInput.value.trim();
+  if (key) {
+    geminiApiKey = key;
+    localStorage.setItem('gemini_api_key', key);
+    devStatusMsg.textContent = '✅ API Key saved successfully!';
+    devStatusMsg.className = 'dev-status-msg success';
+  } else {
+    geminiApiKey = '';
+    localStorage.removeItem('gemini_api_key');
+    devStatusMsg.textContent = '🗑️ API Key cleared. Local Mode active.';
+    devStatusMsg.className = 'dev-status-msg error';
+  }
+  
+  setTimeout(() => {
+    toggleDevMode();
+  }, 1000);
+}
+
+// Append User Message to Chat Window
+function appendUserMessage(text) {
+  const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const msgHtml = `
+    <div class="chat-message user">
+      <div class="msg-content">${escapeHTML(text)}</div>
+      <span class="msg-time">${time}</span>
+    </div>
+  `;
+  chatMessages.insertAdjacentHTML('beforeend', msgHtml);
+  scrollToBottom();
+}
+
+// Append Bot Message (supports basic markdown formatting like bold/links)
+function appendBotMessage(text) {
+  const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const formattedText = parseBotMarkdown(text);
+  
+  const msgHtml = `
+    <div class="chat-message bot">
+      <div class="msg-content">${formattedText}</div>
+      <span class="msg-time">${time}</span>
+    </div>
+  `;
+  chatMessages.insertAdjacentHTML('beforeend', msgHtml);
+  scrollToBottom();
+}
+
+// Display typing indicator while generating response
+function showTypingIndicator() {
+  const indicatorHtml = `
+    <div class="typing-indicator" id="typingIndicator">
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+    </div>
+  `;
+  chatMessages.insertAdjacentHTML('beforeend', indicatorHtml);
+  scrollToBottom();
+}
+
+function removeTypingIndicator() {
+  const indicator = document.getElementById('typingIndicator');
+  if (indicator) indicator.remove();
+}
+
+function scrollToBottom() {
+  const chatBody = document.getElementById('chatBody');
+  if (chatBody) {
+    chatBody.scrollTo({ top: chatBody.scrollHeight, behavior: 'smooth' });
+  }
+}
+
+// Escape HTML tags to prevent XSS
+function escapeHTML(str) {
+  return str.replace(/[&<>'"]/g, 
+    tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+  );
+}
+
+// Basic custom markdown parser for links, bold, and linebreaks
+function parseBotMarkdown(text) {
+  // Convert [text](url) to <a href="url" target="_blank" rel="noopener noreferrer">text</a>
+  let parsed = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+  // Convert **text** to <strong>text</strong>
+  parsed = parsed.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  // Convert bullet points starting with * or • to linebreaks
+  parsed = parsed.replace(/\n/g, '<br>');
+  return parsed;
+}
+
+// Handle Form Submissions
+function handleChatSubmit(e) {
+  e.preventDefault();
+  const query = chatInput.value.trim();
+  if (!query) return;
+  
+  chatInput.value = '';
+  processQuery(query);
+}
+
+// Handle suggestion chip clicks
+function handleSuggestion(suggestionText) {
+  processQuery(suggestionText);
+}
+
+// Process user queries (Hybrid Logic)
+function processQuery(query) {
+  appendUserMessage(query);
+  showTypingIndicator();
+  
+  setTimeout(async () => {
+    removeTypingIndicator();
+    
+    // Check if Gemini Live Key is active
+    if (geminiApiKey) {
+      try {
+        const liveResponse = await fetchGeminiLiveResponse(query);
+        appendBotMessage(liveResponse);
+      } catch (err) {
+        console.error("Gemini API Error:", err);
+        // Fallback to local offline matcher on error
+        const localResponse = getLocalBotResponse(query);
+        appendBotMessage(`*(API Fallback)* ${localResponse}`);
+      }
+    } else {
+      // Local offline matcher
+      const localResponse = getLocalBotResponse(query);
+      appendBotMessage(localResponse);
+    }
+  }, 1000);
+}
+
+// Live Gemini API Client Call
+async function fetchGeminiLiveResponse(userQuery) {
+  const portfolioFacts = `
+    You are VincyBot, an interactive AI Assistant for Raj Vincy Degapati's portfolio.
+    Answer the user's questions perfectly, professionally, and warmly.
+    Always format your responses cleanly with bullet points, bold tags, and spacing.
+    Keep answers very concise (under 3-4 sentences max if possible) so it fits in a mobile chat panel.
+    If the user asks questions unrelated to Raj Vincy's career, skills, projects, or background, politely reply that you can only discuss Raj Vincy's portfolio facts.
+    
+    Here is Raj's factsheet:
+    - Name: Raj Vincy Degapati
+    - Education: Computer Science & Engineering (B.Tech) student at Aditya Engineering College (A), Surampalem. CGPA: 8.45 (2023 - Present).
+    - Email: degapatirajvincy@gmail.com
+    - Phone: +91 6305575411
+    - Location: Andhra Pradesh, India
+    - LinkedIn: https://linkedin.com/in/raj-vincy-degapati
+    - GitHub: https://github.com/Vincyyy07
+    - Trainee Internship: Front-End Developer trainee at 1Stop.ai (May - June 2025), built a portfolio.
+    - Projects:
+      1. Secure Password: Password checker using React and TypeScript. GitHub: https://github.com/Vincyyy07/secure-password, Demo: https://secure-password-lac.vercel.app
+      2. MocMate AI: AI interview practice platform using React, TS, Tailwind CSS. GitHub: https://github.com/Vincyyy07/MocMate-AI, Demo: https://team-code-zenith-main.onrender.com/
+    - Skills:
+      - Languages: C, C++, Python, JavaScript, TypeScript
+      - Web: HTML5, CSS3, React, Tailwind CSS, Bootstrap, Vite
+      - DB: MongoDB, MySQL, SQLite
+      - Concepts: Problem Solving, DSA, OOP, Responsive Design, UI/UX
+    - Achievements:
+      - CodeChef: 1-Star Coder (Max: 1179)
+      - LeetCode: 150+ Solved
+      - HackerRank: 5⭐ Problem Solving, 5⭐ C, 4⭐ C++
+    - Certifications: Web Dev (IBM SkillsBuild), React (HackerRank), Problem Solving (HackerRank), OOP (LinkedIn Learning).
+  `;
+
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiApiKey}`;
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      contents: [{
+        parts: [{
+          text: `System Prompt: ${portfolioFacts}\n\nUser Question: ${userQuery}`
+        }]
+      }]
+    })
+  });
+  
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+  
+  const data = await response.json();
+  return data.candidates[0].content.parts[0].text;
+}
+
+// Local Semantic Matcher loaded with Portfolio Knowledge Base
+function getLocalBotResponse(input) {
+  const text = input.toLowerCase().trim();
+  
+  const categories = [
+    {
+      id: 'greeting',
+      keywords: ['hi', 'hello', 'hey', 'greetings', 'yo', 'sup', 'bot', 'vincybot', 'who are you', 'what is your name', 'start'],
+      response: "Hey there! 👋 I'm **VincyBot**, Raj Vincy's custom AI assistant. I'm here to answer questions about his skills, projects, achievements, and background! Feel free to ask me anything or click the suggestion chips below."
+    },
+    {
+      id: 'about',
+      keywords: ['about', 'profile', 'who is', 'raj', 'vincy', 'degapati', 'college', 'study', 'education', 'aditya', 'cgpa', 'student', 'btech', 'school'],
+      response: "Raj Vincy Degapati is a highly motivated **Computer Science & Engineering student** at **Aditya Engineering College (A), Surampalem** (B.Tech, 2023 - Present) with an impressive **CGPA of 8.45**.<br><br>He has a strong passion for front-end development, graphic design, and UI/UX engineering, always striving to build clean, responsive, and premium web interfaces."
+    },
+    {
+      id: 'skills',
+      keywords: ['skills', 'skill', 'technologies', 'programming', 'languages', 'frontend', 'backend', 'react', 'javascript', 'html', 'css', 'typescript', 'tailwind', 'bootstrap', 'python', 'dsa', 'database', 'mongodb', 'mysql', 'sqlite', 'c++', 'c language'],
+      response: "Here are Raj Vincy's technical proficiencies:<br><br>• 💻 **Languages:** C, C++, Python, JavaScript, TypeScript<br>• 🌐 **Web Development:** HTML5, CSS3, React, Tailwind CSS, Bootstrap, Vite<br>• 🗄️ **Databases:** MongoDB, MySQL, SQLite<br>• 🛠️ **Developer Tools:** Git, GitHub, VS Code<br>• 🧠 **Core Competencies:** Problem Solving, Data Structures & Algorithms (DSA), Object-Oriented Programming (OOP), and Responsive UI/UX Design."
+    },
+    {
+      id: 'projects',
+      keywords: ['projects', 'project', 'portfolio', 'portfolio site', 'mocmate', 'secure password', 'password checker', 'interview', 'ai platform', 'build', 'work'],
+      response: "Raj Vincy has built some highly polished, interactive web applications:<br><br>1. 🛡️ **Secure Password**: A React & TypeScript password strength checker that validates inputs based on advanced complexity criteria and provides secure suggestions.<br>👉 [GitHub Repo](https://github.com/Vincyyy07/secure-password) | [Live Demo](https://secure-password-lac.vercel.app)<br><br>2. 🤖 **MocMate AI**: An AI-powered interview simulator built using React, TypeScript, and Tailwind CSS. It features custom question sheets, analytics, and rich dashboards.<br>👉 [GitHub Repo](https://github.com/Vincyyy07/MocMate-AI) | [Live Demo](https://team-code-zenith-main.onrender.com/)"
+    },
+    {
+      id: 'internships',
+      keywords: ['internship', 'internships', 'experience', 'work experience', '1stop', 'job', 'trainee', 'training'],
+      response: "Raj completed a trainee internship as a **Front-End Developer** at **1Stop.ai** (May 2025 – June 2025).<br><br>During this time, he was trained in HTML, CSS, and JavaScript, earned certification, and built hands-on front-end projects including his first fully responsive portfolio interface."
+    },
+    {
+      id: 'achievements',
+      keywords: ['achievements', 'achievement', 'coding profiles', 'codechef', 'leetcode', 'hackerrank', 'geeksforgeeks', 'gfg', 'stars', 'problems', 'solved'],
+      response: "Raj Vincy is highly active on competitive programming and algorithmic solving platforms:<br><br>• 🍽️ **CodeChef:** 1-Star Coder with a Max Rating of **1179**.<br>• 💻 **LeetCode:** Solved **150+ problems** and regularly active.<br>• ⭐ **HackerRank:** Achieved **5⭐ in Problem Solving**, **5⭐ in C**, and **4⭐ in C++**.<br>• 🍃 **GeeksforGeeks:** Actively practices data structures and algorithms."
+    },
+    {
+      id: 'certifications',
+      keywords: ['certifications', 'cert', 'certificate', 'certification', 'ibm', 'springboard', 'linkedin learning', 'hacker rank'],
+      response: "Raj has earned several reputable industry certifications:<br><br>• 🧠 **IBM SkillsBuild:** Web Development Fundamentals<br>• ⚛️ **HackerRank:** Frontend Developer (React), Problem Solving (Basic & Intermediate), SQL (Basic)<br>• 💼 **HackerRank:** Software Engineer Intern Certification<br>• 📚 **LinkedIn Learning:** Object Oriented Design, React Essential Training<br>• 🤖 **Infosys Springboard:** AI Foundation Certification"
+    },
+    {
+      id: 'contact',
+      keywords: ['contact', 'email', 'phone', 'call', 'reach', 'socials', 'linkedin', 'github', 'mail', 'connect', 'location', 'address', 'where do you live'],
+      response: "You can easily get in touch with Raj Vincy here:<br><br>• 📧 **Email:** [degapatirajvincy@gmail.com](mailto:degapatirajvincy@gmail.com)<br>• 📞 **Phone:** [+91 6305575411](tel:+916305575411)<br>• 📍 **Location:** Andhra Pradesh, India<br>• 💼 **LinkedIn:** [raj-vincy-degapati](https://linkedin.com/in/raj-vincy-degapati)<br>• 💻 **GitHub:** [Vincyyy07](https://github.com/Vincyyy07)<br><br>Feel free to shoot him an email or fill out the contact form directly in the **Contact** section of the website!"
+    },
+    {
+      id: 'resume',
+      keywords: ['resume', 'cv', 'biodata', 'hire', 'hiring', 'resume.pdf'],
+      response: "You can view or download Raj's official resume here:<br><br>👉 [Download Resume / CV](assets/resume.pdf) (PDF Format)<br><br>He is actively seeking internship and front-end development opportunities!"
+    },
+    {
+      id: 'joke',
+      keywords: ['joke', 'funny', 'laugh', 'tell me a joke'],
+      response: "Here's one for you:<br><br>*Why do front-end developers eat lunch alone?*<br>Because they don't know how to **join** tables! 😂 (Get it? SQL joins!)"
+    }
+  ];
+  
+  // Score each category based on keyword matches
+  let bestMatch = null;
+  let highestScore = 0;
+  
+  categories.forEach(cat => {
+    let score = 0;
+    cat.keywords.forEach(keyword => {
+      // Full word match scores higher
+      const regexFull = new RegExp(`\\b${keyword}\\b`, 'gi');
+      const matchesFull = text.match(regexFull);
+      if (matchesFull) {
+        score += matchesFull.length * 3;
+      } else if (text.includes(keyword)) {
+        score += 1;
+      }
+    });
+    
+    if (score > highestScore) {
+      highestScore = score;
+      bestMatch = cat;
+    }
+  });
+  
+  if (highestScore > 0 && bestMatch) {
+    return bestMatch.response;
+  }
+  
+  // Default fallback response
+  return "I'm not quite sure about that specific question, but I'd love to help! You can ask me about Raj's **skills**, **projects**, **education**, **certifications**, or **how to contact him**. <br><br>Or just click one of the quick chips below! 👇";
+}
