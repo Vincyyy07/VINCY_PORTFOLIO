@@ -481,8 +481,9 @@ function getLocalBotResponse(input) {
   categories.forEach(cat => {
     let score = 0;
     cat.keywords.forEach(keyword => {
-      // Full word match scores higher
-      const regexFull = new RegExp(`\\b${keyword}\\b`, 'gi');
+      // Escape regex special characters to prevent syntax crashes with terms like 'c++'
+      const escapedKeyword = keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regexFull = new RegExp(`\\b${escapedKeyword}\\b`, 'gi');
       const matchesFull = text.match(regexFull);
       if (matchesFull) {
         score += matchesFull.length * 3;
