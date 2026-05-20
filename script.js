@@ -285,7 +285,7 @@ const chatInput = document.getElementById('chatInput');
 // Initialize Chatbot with a Welcome Message if empty
 function initChatbot() {
   if (chatMessages && chatMessages.children.length === 0) {
-    appendBotMessage("Hey there! 👋 I'm **VincyBot**, Raj Vincy's AI assistant. Ask me anything about his skills, projects, certifications, or experience, and I'll answer instantly! 🤖");
+    appendBotMessage("Hey there! 👋 I'm **Vinc**, Raj Vincy's AI assistant. Ask me anything about his skills, projects, certifications, or experience, and I'll answer instantly! 🤖");
   }
 }
 
@@ -425,7 +425,7 @@ function getLocalBotResponse(input) {
     {
       id: 'greeting',
       keywords: ['hi', 'hello', 'hey', 'greetings', 'yo', 'sup', 'bot', 'vincybot', 'who are you', 'what is your name', 'start'],
-      response: "Hey there! 👋 I'm **ViBot**, Raj Vincy's custom AI assistant. I'm here to answer questions about his skills, projects, achievements, and background! Feel free to ask me anything or click the suggestion chips below."
+      response: "Hey there! 👋 I'm **Vinc**, Raj Vincy's custom AI assistant. I'm here to answer questions about his skills, projects, achievements, and background! Feel free to ask me anything or click the suggestion chips below."
     },
     {
       id: 'about',
